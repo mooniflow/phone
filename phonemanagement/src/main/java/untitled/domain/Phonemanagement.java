@@ -40,6 +40,9 @@ public class Phonemanagement {
     //<<< Clean Arch / Port Method
     public void lock(LockCommand lockCommand) {
         //implement business logic here:
+        this.setPhoneId(lockCommand.getPhoneId());
+        this.setUserId(lockCommand.getUserId());
+        this.setLock(lockCommand.getLock());
 
         Locked locked = new Locked(this);
         locked.publishAfterCommit();
