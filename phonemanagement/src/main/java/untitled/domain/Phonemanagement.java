@@ -9,10 +9,6 @@ import javax.persistence.*;
 import lombok.Data;
 import untitled.PhonemanagementApplication;
 import untitled.domain.Insurancecharged;
-import untitled.domain.Locked;
-import untitled.domain.Servicestarted;
-import untitled.domain.Servicestopped;
-import untitled.domain.Unlocked;
 
 @Entity
 @Table(name = "Phonemanagement_table")
@@ -34,30 +30,49 @@ public class Phonemanagement {
 
     private String service;
 
-    @PostPersist
-    public void onPostPersist() {
-        Locked locked = new Locked(this);
-        locked.publishAfterCommit();
-
-        Servicestopped servicestopped = new Servicestopped(this);
-        servicestopped.publishAfterCommit();
-
-        Insurancecharged insurancecharged = new Insurancecharged(this);
-        insurancecharged.publishAfterCommit();
-
-        Unlocked unlocked = new Unlocked(this);
-        unlocked.publishAfterCommit();
-
-        Servicestarted servicestarted = new Servicestarted(this);
-        servicestarted.publishAfterCommit();
-    }
-
     public static PhonemanagementRepository repository() {
         PhonemanagementRepository phonemanagementRepository = PhonemanagementApplication.applicationContext.getBean(
             PhonemanagementRepository.class
         );
         return phonemanagementRepository;
     }
+
+    //<<< Clean Arch / Port Method
+    public void lock(LockCommand lockCommand) {
+        //implement business logic here:
+
+        Locked locked = new Locked(this);
+        locked.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
+    //<<< Clean Arch / Port Method
+    public void stoptheservice(StoptheserviceCommand stoptheserviceCommand) {
+        //implement business logic here:
+
+        Servicestopped servicestopped = new Servicestopped(this);
+        servicestopped.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
+    //<<< Clean Arch / Port Method
+    public void unlock(UnlockCommand unlockCommand) {
+        //implement business logic here:
+
+        Unlocked unlocked = new Unlocked(this);
+        unlocked.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
+    //<<< Clean Arch / Port Method
+    public void starttheservice(StarttheserviceCommand starttheserviceCommand) {
+        //implement business logic here:
+
+        Servicestarted servicestarted = new Servicestarted(this);
+        servicestarted.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
 
     //<<< Clean Arch / Port Method
     public static void callInsurance(Insurancecalled insurancecalled) {

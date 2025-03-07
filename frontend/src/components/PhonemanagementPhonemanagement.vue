@@ -47,28 +47,7 @@
                     text
                     @click="save"
                 >
-                    Lock
-                </v-btn>
-                <v-btn
-                    color="primary"
-                    text
-                    @click="save"
-                >
-                    Stoptheservice
-                </v-btn>
-                <v-btn
-                    color="primary"
-                    text
-                    @click="save"
-                >
-                    Unlock
-                </v-btn>
-                <v-btn
-                    color="primary"
-                    text
-                    @click="save"
-                >
-                    Starttheservice
+                저장
                 </v-btn>
                 <v-btn
                     color="primary"
@@ -82,6 +61,62 @@
         </v-card-actions>
         <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn
+                v-if="!editMode"
+                color="primary"
+                text
+                @click="openLock"
+            >
+                Lock
+            </v-btn>
+            <v-dialog v-model="lockDiagram" width="500">
+                <LockCommand
+                    @closeDialog="closeLock"
+                    @lock="lock"
+                ></LockCommand>
+            </v-dialog>
+            <v-btn
+                v-if="!editMode"
+                color="primary"
+                text
+                @click="openStoptheservice"
+            >
+                Stoptheservice
+            </v-btn>
+            <v-dialog v-model="stoptheserviceDiagram" width="500">
+                <StoptheserviceCommand
+                    @closeDialog="closeStoptheservice"
+                    @stoptheservice="stoptheservice"
+                ></StoptheserviceCommand>
+            </v-dialog>
+            <v-btn
+                v-if="!editMode"
+                color="primary"
+                text
+                @click="openUnlock"
+            >
+                Unlock
+            </v-btn>
+            <v-dialog v-model="unlockDiagram" width="500">
+                <UnlockCommand
+                    @closeDialog="closeUnlock"
+                    @unlock="unlock"
+                ></UnlockCommand>
+            </v-dialog>
+            <v-btn
+                v-if="!editMode"
+                color="primary"
+                text
+                @click="openStarttheservice"
+            >
+                Starttheservice
+            </v-btn>
+            <v-dialog v-model="starttheserviceDiagram" width="500">
+                <StarttheserviceCommand
+                    @closeDialog="closeStarttheservice"
+                    @starttheservice="starttheservice"
+                ></StarttheserviceCommand>
+            </v-dialog>
         </v-card-actions>
 
         <v-snackbar
@@ -119,6 +154,10 @@
                 timeout: 5000,
                 text: '',
             },
+            lockDiagram: false,
+            stoptheserviceDiagram: false,
+            unlockDiagram: false,
+            starttheserviceDiagram: false,
         }),
 	async created() {
         },
@@ -215,6 +254,90 @@
             },
             change(){
                 this.$emit('input', this.value);
+            },
+            async lock() {
+                try {
+                    if(!this.offline){
+                        var temp = await axios.post(axios.fixUrl(this.value._links['/lock'].href))
+                        for(var k in temp.data) this.value[k]=temp.data[k];
+                    }
+
+                    this.editMode = false;
+                    
+                    this.$emit('input', this.value);
+                    this.$emit('delete', this.value);
+                
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            async stoptheservice() {
+                try {
+                    if(!this.offline){
+                        var temp = await axios.post(axios.fixUrl(this.value._links['/stoptheservice'].href))
+                        for(var k in temp.data) this.value[k]=temp.data[k];
+                    }
+
+                    this.editMode = false;
+                    
+                    this.$emit('input', this.value);
+                    this.$emit('delete', this.value);
+                
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            async unlock() {
+                try {
+                    if(!this.offline){
+                        var temp = await axios.post(axios.fixUrl(this.value._links['/unlock'].href))
+                        for(var k in temp.data) this.value[k]=temp.data[k];
+                    }
+
+                    this.editMode = false;
+                    
+                    this.$emit('input', this.value);
+                    this.$emit('delete', this.value);
+                
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            async starttheservice() {
+                try {
+                    if(!this.offline){
+                        var temp = await axios.post(axios.fixUrl(this.value._links['/starttheservice'].href))
+                        for(var k in temp.data) this.value[k]=temp.data[k];
+                    }
+
+                    this.editMode = false;
+                    
+                    this.$emit('input', this.value);
+                    this.$emit('delete', this.value);
+                
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
             },
         },
     }
