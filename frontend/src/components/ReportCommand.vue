@@ -5,6 +5,10 @@
         </v-card-title>
 
         <v-card-text>
+            <Number label="Id" v-model="value.id" :editMode="editMode"/>
+            <Number label="PhoneId" v-model="value.phoneId" :editMode="editMode"/>
+            <Date label="ReportDate" v-model="value.reportDate" :editMode="editMode"/>
+            <Number label="UserId" v-model="value.userId" :editMode="editMode"/>
         </v-card-text>
 
         <v-card-actions>
@@ -40,6 +44,10 @@
             value: {},
         }),
         created() {
+            this.value.id = 0;
+            this.value.phoneId = 0;
+            this.value.reportDate = '2025-03-07';
+            this.value.userId = 0;
         },
         watch: {
         },

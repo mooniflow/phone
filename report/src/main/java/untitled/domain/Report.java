@@ -8,9 +8,6 @@ import java.util.Map;
 import javax.persistence.*;
 import lombok.Data;
 import untitled.ReportApplication;
-import untitled.domain.Insurancecalled;
-import untitled.domain.Reportcancelled;
-import untitled.domain.Reported;
 
 @Entity
 @Table(name = "Report_table")
@@ -28,23 +25,39 @@ public class Report {
 
     private Date reportDate;
 
-    @PostPersist
-    public void onPostPersist() {
-        Reported reported = new Reported(this);
-        reported.publishAfterCommit();
-
-        Reportcancelled reportcancelled = new Reportcancelled(this);
-        reportcancelled.publishAfterCommit();
-
-        Insurancecalled insurancecalled = new Insurancecalled(this);
-        insurancecalled.publishAfterCommit();
-    }
-
     public static ReportRepository repository() {
         ReportRepository reportRepository = ReportApplication.applicationContext.getBean(
             ReportRepository.class
         );
         return reportRepository;
     }
+
+    //<<< Clean Arch / Port Method
+    public void report(ReportCommand reportCommand) {
+        //implement business logic here:
+
+        Reported reported = new Reported(this);
+        reported.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
+    //<<< Clean Arch / Port Method
+    public void cancelReport(CancelReportCommand cancelReportCommand) {
+        //implement business logic here:
+
+        Reportcancelled reportcancelled = new Reportcancelled(this);
+        reportcancelled.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
+    //<<< Clean Arch / Port Method
+    public void timecheck(TimecheckCommand timecheckCommand) {
+        //implement business logic here:
+
+        Insurancecalled insurancecalled = new Insurancecalled(this);
+        insurancecalled.publishAfterCommit();
+    }
+    //>>> Clean Arch / Port Method
+
 }
 //>>> DDD / Aggregate Root
