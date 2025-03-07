@@ -39,7 +39,10 @@ public class Alarm {
     public static void alarmTheLost(Reported reported) {
    
         Alarm alarm = new Alarm();
-        
+        alarm.setUserId(reported.getUserId());
+        alarm.setPhoneId(reported.getPhoneId());
+        alarm.setType("locked");
+        alarm.setDescription("Alarm for the reported lost!");
         repository().save(alarm);
         
         
@@ -61,13 +64,12 @@ public class Alarm {
     //>>> Clean Arch / Port Method
     //<<< Clean Arch / Port Method
     public static void alarmTheLost(Reportcancelled reportcancelled) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
         Alarm alarm = new Alarm();
+        alarm.setUserId(reportcancelled.getUserId());
+        alarm.setPhoneId(reportcancelled.getPhoneId());
+        alarm.setType("unlocked");
+        alarm.setDescription("Alarm for the cancelled lost!");
         repository().save(alarm);
-
-        */
 
         /** Example 2:  finding and process
         
@@ -86,13 +88,12 @@ public class Alarm {
     //>>> Clean Arch / Port Method
     //<<< Clean Arch / Port Method
     public static void alarmTheInsurance(Insurancecharged insurancecharged) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
         Alarm alarm = new Alarm();
+        alarm.setUserId(insurancecharged.getUserId());
+        alarm.setPhoneId(insurancecharged.getPhoneId());
+        alarm.setType("insurance");
+        alarm.setDescription("Alarm for insurance!");
         repository().save(alarm);
-
-        */
 
         /** Example 2:  finding and process
         
@@ -111,13 +112,12 @@ public class Alarm {
     //>>> Clean Arch / Port Method
     //<<< Clean Arch / Port Method
     public static void alarmTheStop(Servicestopped servicestopped) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
         Alarm alarm = new Alarm();
+        alarm.setUserId(servicestopped.getUserId());
+        alarm.setPhoneId(servicestopped.getPhoneId());
+        alarm.setType(servicestopped.getService());
+        alarm.setDescription("Alarm for stopped service!");
         repository().save(alarm);
-
-        */
 
         /** Example 2:  finding and process
         
@@ -139,7 +139,7 @@ public class Alarm {
         Alarm alarm = new Alarm();
         alarm.setUserId(servicestarted.getUserId());
         alarm.setPhoneId(servicestarted.getPhoneId());
-        alarm.setType(servicestarted.getType());
+        alarm.setType(servicestarted.getService());
         alarm.setDescription("Alarm for restarting service!");
         repository().save(alarm);
 
@@ -167,7 +167,7 @@ public class Alarm {
         alarm.setUserId(locked.getUserId());
         alarm.setPhoneId(locked.getPhoneId());
         alarm.setType(locked.getLock());
-        this.setDescription("Alarm for locked phone!");
+        alarm.setDescription("Alarm for locked phone!");
         repository().save(alarm);
 
         
@@ -192,7 +192,7 @@ public class Alarm {
         Alarm alarm = new Alarm();
         alarm.setUserId(unlocked.getUserId());
         alarm.setPhoneId(unlocked.getPhoneId());
-        alarm.setType("Unlocked");
+        alarm.setType(unlocked.getLock());
         alarm.setDescription("Alarm for unlocked phone!");
         repository().save(alarm);
         /** Example 2:  finding and process

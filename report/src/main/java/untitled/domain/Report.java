@@ -28,6 +28,7 @@ public class Report {
 
     private Date reportDate;
 
+
     @PostPersist
     public void onPostPersist() {
         Reported reported = new Reported(this);
