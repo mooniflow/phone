@@ -24,6 +24,7 @@ public class Alarm {
     private Long phoneId;
 
     private String type;
+    
 
     private String description;
 
@@ -36,13 +37,12 @@ public class Alarm {
 
     //<<< Clean Arch / Port Method
     public static void alarmTheLost(Reported reported) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
+   
         Alarm alarm = new Alarm();
+        
         repository().save(alarm);
-
-        */
+        
+        
 
         /** Example 2:  finding and process
         
@@ -136,13 +136,12 @@ public class Alarm {
     //>>> Clean Arch / Port Method
     //<<< Clean Arch / Port Method
     public static void alarmTheStop(Servicestarted servicestarted) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
         Alarm alarm = new Alarm();
+        alarm.setUserId(servicestarted.getUserId());
+        alarm.setPhoneId(servicestarted.getPhoneId());
+        alarm.setType(servicestarted.getType());
+        alarm.setDescription("Alarm for restarting service!");
         repository().save(alarm);
-
-        */
 
         /** Example 2:  finding and process
         
@@ -163,11 +162,15 @@ public class Alarm {
     public static void alarmTheLock(Locked locked) {
         //implement business logic here:
 
-        /** Example 1:  new item 
+        
         Alarm alarm = new Alarm();
+        alarm.setUserId(locked.getUserId());
+        alarm.setPhoneId(locked.getPhoneId());
+        alarm.setType(locked.getLock());
+        this.setDescription("Alarm for locked phone!");
         repository().save(alarm);
 
-        */
+        
 
         /** Example 2:  finding and process
         
@@ -186,14 +189,12 @@ public class Alarm {
     //>>> Clean Arch / Port Method
     //<<< Clean Arch / Port Method
     public static void alarmTheLock(Unlocked unlocked) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
         Alarm alarm = new Alarm();
+        alarm.setUserId(unlocked.getUserId());
+        alarm.setPhoneId(unlocked.getPhoneId());
+        alarm.setType("Unlocked");
+        alarm.setDescription("Alarm for unlocked phone!");
         repository().save(alarm);
-
-        */
-
         /** Example 2:  finding and process
         
 

@@ -42,7 +42,7 @@ mvn spring-boot:run
 ```
 - phonemanagement
 ```
- http :8088/phonemanagements id="id"phoneId="phoneId"userId="userId"status="status"lock="lock"service="service"
+ http :8084/phonemanagements id=1 phoneId=1 userId=1 status="status" lock="lock" service="service"
 ```
 - alarm
 ```
